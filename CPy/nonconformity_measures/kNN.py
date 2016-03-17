@@ -1,6 +1,7 @@
 #!/usr/local/bin/env python
+import ncm_utils
 
-class KNN(NCM):
+class KNN(ncm_utils.NCM):
     
     def __init__(k):
         """k-Nearest Neighbours (kNN) non-conformity measure.

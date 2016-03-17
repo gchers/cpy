@@ -1,9 +1,10 @@
 #!/usr/local/bin/env python
+import ncm_utils
 
 GAUSSIAN_KERNEL = lambda u: np.exp(-0.5 * np.dot(u,u)) / np.sqrt(2 * np.pi)
 
 
-class KDE(NCM):
+class KDE(ncm_utilsNCM):
     
     
     def __init__(h, kernel):
