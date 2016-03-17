@@ -1,8 +1,7 @@
 #!/usr/local/bin/env python
-"""Prediction with confidence.
+"""Conformal Prediction.
 
-Implementation of prediction with confidence [1]. The implemented non-conformity
-measures so far are kNN and KDE (gaussian kernel).
+Implementation of conformal predictors [1].
 
 Ref:                                                                         
 [1] Shafer, Glenn, and Vladimir Vovk. "A tutorial on conformal prediction."  
