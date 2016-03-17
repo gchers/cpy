@@ -7,13 +7,13 @@ class NCM:
     Every nonconformity measure should extend this class.
     """
     
-    def __init__():
+    def __init__(self):
         """This method initialises the parameters of the
         nonconformity measure.
         """
        
     
-    def compute(zn, z):
+    def compute(self, zn, z):
         """Compute the nonconformity measure for the new
         object zn.
         Return a float number

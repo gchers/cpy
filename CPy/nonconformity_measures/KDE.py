@@ -25,26 +25,28 @@ class KDE(ncm_utils.NCM):
         else:
             raise Exception("`kernel' must either be a string or a kernel function")
         
-    def compute(self, zn, z):
+    def compute(self, z, Z):
         """Return Kernel Density Estimation (KDE) non-conformity measure.
     
         Keyword arguments:
-            zn the example on which to calculate the measure
-            z: numpy.array containing examples one per row, excluding zn
+            z: numpy array
+               The example on which to calculate the measure
+            Z: two dimensional numpy array
+               Contains examples one per row, excluding z.
         """
-        z_tmp = np.vstack((z, zn))
+        z_tmp = np.vstack((Z, z))
         (N, d) = z_tmp.shape
         r = 0.0
         for zi in z_tmp:
-            r -= self.kernel((zn - zi) / self.h)
+            r -= self.kernel((z - zi) / self.h)
         r /= N * (self.h ** d)
     
         return r
     
-    def __gaussian_kernel(self, u):
+    def __gaussian_kernel(self, z):
         """Gaussian kernel.
         
         Keyword arguments:
-            u: vector
+            z: vector
         """
-        return np.exp(-0.5 * np.dot(u, u)) / np.sqrt(2 * np.pi)
+        return np.exp(-0.5 * np.dot(z, z)) / np.sqrt(2 * np.pi)
