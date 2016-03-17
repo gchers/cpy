@@ -8,7 +8,6 @@ Ref:
 The Journal of Machine Learning Research 9 (2008): 371-421.                  
 """
 __author__ = "Giovanni Cherubin <g.chers :at: gmail.com>"
-import types
 import numpy as np
 
 
