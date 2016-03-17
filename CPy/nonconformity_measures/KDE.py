@@ -1,13 +1,12 @@
 #!/usr/local/bin/env python
 import ncm_utils
+import numpy as np
 
-GAUSSIAN_KERNEL = lambda u: np.exp(-0.5 * np.dot(u,u)) / np.sqrt(2 * np.pi)
 
-
-class KDE(ncm_utilsNCM):
+class KDE(ncm_utils.NCM):
     
     
-    def __init__(h, kernel):
+    def __init__(self, h, kernel):
         """Kernel Density Estimation (KDE) non-conformity measure.
     
         Keyword arguments:
@@ -18,7 +17,7 @@ class KDE(ncm_utilsNCM):
         self.h = h
         if isinstance(kernel, str):
             if kernel == 'gaussian':
-                 self.kernel = GAUSSIAN_KERNEL
+                 self.kernel = self.__gaussian_kernel
             else:
                 raise Exception('Non recognized kernel function')
         elif isinstance(kernel, function):
@@ -26,7 +25,7 @@ class KDE(ncm_utilsNCM):
         else:
             raise Exception("`kernel' must either be a string or a kernel function")
         
-    def compute(zn, z):
+    def compute(self, zn, z):
         """Return Kernel Density Estimation (KDE) non-conformity measure.
     
         Keyword arguments:
@@ -35,6 +34,17 @@ class KDE(ncm_utilsNCM):
         """
         z_tmp = np.vstack((z, zn))
         (N, d) = z_tmp.shape
-        r = - sum((self.kernel((zn - zi) / self.h) for zi in z_tmp)) / (N * (self.h ** d))
+        r = 0.0
+        for zi in z_tmp:
+            r -= self.kernel((zn - zi) / self.h)
+        r /= N * (self.h ** d)
     
         return r
+    
+    def __gaussian_kernel(self, u):
+        """Gaussian kernel.
+        
+        Keyword arguments:
+            u: vector
+        """
+        return np.exp(-0.5 * np.dot(u, u)) / np.sqrt(2 * np.pi)
