@@ -1,7 +1,5 @@
 #!/usr/local/bin/env python
 
-NON_CONFORMITY_MEASURES = {'kde': ncm_kde,
-                           'knn': ncm_knn}
 
 class NCM:
     """Nonconformity measure.
@@ -10,8 +8,10 @@ class NCM:
     """
     
     def __init__():
+        """This method initialises the parameters of the
+        nonconformity measure.
+        """
        
-        pass
     
     def compute(zn, z):
         """Compute the nonconformity measure for the new
@@ -22,4 +22,3 @@ class NCM:
             zn: the example on which to calculate the measure.
             z: numpy.array containing examples one per row, excluding zn. 
         """
-        pass
