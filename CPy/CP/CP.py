@@ -17,22 +17,36 @@ class CP:
     def __init__(self, ncm, smooth=True):
         """Initialises a Conformal Prediction object.
 
-        Keyword arguments:
-            ncm: non-conformity measure.
-            smooth: use smooth CP (smooth=True) or normal CP.
+        Parameters
+        ----------
+        ncm : NCM
+            Non-conformity measure object.
+        smooth : bool
+            Use smooth CP (smooth=True) or normal CP.
         """
         self.smooth = smooth
         self.ncm = ncm
 
     def predict_labelled(self, z, Z, Y, e):
-        """Return a prediction set for the new object zn that contains its
-        true label with probability 1-e.
+        """Return a prediction set for the new object z using CP.
     
-        Keyword arguments:
-            z: new example (vector).
-            Z: numpy.array containing the examples one per row.
-            Y: numpy.array containing the labels one per row.
-            e: significance level [0,1].
+        Parameters
+        ----------
+        z : array-like, shape (n_features,)
+            Test vector, where n_features is the number of features.
+        Z : array-like, shape (n_samples, n_features)
+            Training vectors, where n_samples is the number of samples,
+            n_features is the number of features.
+        Y : array-like, shape (n_samples,)
+            Training labels. Each label Y[i] correspond to the i-th
+            sample of X.
+        e : float in [0,1]
+            Significance level.
+    
+        Returns
+        -------
+        pred : list
+            Prediction set: list of predicted labels for z.
         """
         Z = np.array(Z)
         Y = np.array(Y)
@@ -45,14 +59,24 @@ class CP:
         return pred
     
     def predict_unlabelled(self, z, Z, e):
-        """Return the prediction with confidence given a certain significance level.
-        Returns True if the pvalue is greater than the significance leve, False
-        otherwise.
+        """Predicts if z comes from the same distribution as Z, with respect
+        to a significance level e.
     
-        Keyword arguments:
-            z: new example (vector).
-            Z: numpy.array containing the examples one per row.
-            e: significance level [0,1].
+        Parameters
+        ----------
+        z : array-like, shape (n_features,)
+            Test vector, where n_features is the number of features.
+        Z : array-like, shape (n_samples, n_features)
+            Training vectors, where n_samples is the number of samples,
+            n_features is the number of features.
+        e : float in [0,1]
+            Significance level.
+
+        Returns
+        -------
+        pred : bool
+            True, if z comes from the same distribution as Z, False otherwise.
+            
         """
         pval = self.calculate_pvalue(z, Z)
 
@@ -61,9 +85,19 @@ class CP:
     def calculate_pvalue(self, z, Z):
         """Return the pvalue for a new object z given objects Z.
         
-        Keyword arguments:
-            z: new example (vector).
-            Z: numpy.array containing the examples one per row.
+        Parameters
+        ----------
+        z : array-like, shape (n_features,)
+            Test vector, where n_features is the number of features.
+        Z : array-like, shape (n_samples, n_features)
+            Training vectors, where n_samples is the number of samples,
+            n_features is the number of features.
+        
+        Returns
+        -------
+        pvalue : float
+            P-value: the larger its value, the more we are confident that z
+            comes from the same distribution as Z.
         """
         # Put together z and Z into Z_full.
         Z_full = np.vstack((Z, z))

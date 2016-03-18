@@ -9,10 +9,15 @@ class KDE(ncm_utils.NCM):
     def __init__(self, h, kernel):
         """Kernel Density Estimation (KDE) non-conformity measure.
     
-        Keyword arguments:
-            h: bandwidth
-            kernel: kernel function, which can be in ['gaussian',] or can be a function
-                calculating the kernel over a vector and returning a scalar
+        Parameters
+        ----------
+        h : float
+            Bandwidth for KDE.
+        kernel : string or function
+            Kernel function for KDE. It can be a string in ['gaussian'], which indicates
+            a gaussian kernel, or a function. In the second case, the function should
+            describe a kernel function, and must:
+            accept an array-like vector of shape (n_features,), and return a float.
         """
         self.h = h
         if isinstance(kernel, str):
@@ -26,13 +31,21 @@ class KDE(ncm_utils.NCM):
             raise Exception("`kernel' must either be a string or a kernel function")
         
     def compute(self, z, Z):
-        """Return Kernel Density Estimation (KDE) non-conformity measure.
+        """Return the Kernel Density Estimation (KDE) non-conformity measure for
+        vector z.
     
-        Keyword arguments:
-            z: numpy array
-               The example on which to calculate the measure
-            Z: two dimensional numpy array
-               Contains examples one per row, excluding z.
+        Parameters
+        ----------
+        z : array-like, shape (n_features,)
+            Test vector, where n_features is the number of features.
+        Z : array-like, shape (n_samples, n_features)
+            Training vectors, where n_samples is the number of samples,
+            n_features is the number of features.
+
+        Returns
+        -------
+        r : float
+            KDE nonconformity measure on vector z with respect to Z.
         """
         z_tmp = np.vstack((Z, z))
         (N, d) = z_tmp.shape
@@ -43,10 +56,19 @@ class KDE(ncm_utils.NCM):
     
         return r
     
-    def __gaussian_kernel(self, z):
+    def __gaussian_kernel(self, u):
         """Gaussian kernel.
         
-        Keyword arguments:
-            z: vector
+        Parameters
+        ----------
+        u : array-like, shape (n_features,)
+            Vector, where n_features is the number of features.
+
+        Returns
+        -------
+        s : float
+            Gaussian kernel over vector u.
         """
-        return np.exp(-0.5 * np.dot(z, z)) / np.sqrt(2 * np.pi)
+        s = np.exp(-0.5 * np.dot(u, u)) / np.sqrt(2 * np.pi)
+
+        return s

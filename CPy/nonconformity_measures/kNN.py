@@ -8,8 +8,10 @@ class KNN(ncm_utils.NCM):
     def __init__(self, k):
         """k-Nearest Neighbours (kNN) non-conformity measure.
         
-        Keyword arguments
-            k: number of neighbours
+        Parameters
+        ----------
+        k : int
+            Number of neighbours.
         """
         if k <= 0:
             raise Exception("Parameter `k' for k-NN should be larger than 0")
@@ -18,11 +20,18 @@ class KNN(ncm_utils.NCM):
     def compute(self, z, Z):
         """Return k-Nearest Neighbours (kNN) nonconformity measure.
         
-        Keyword arguments
-            z: numpy array
-               The example on which to calculate the measure.
-            Z: Two dimensional numpy array
-               Contains examples one per row, excluding z.
+        Parameters
+        ----------
+        z : array-like, shape (n_features,)
+            Test vector, where n_features is the number of features.
+        Z : array-like, shape (n_samples, n_features)
+            Training vectors, where n_samples is the number of samples,
+            n_features is the number of features.
+
+        Returns
+        -------
+        r : float
+            kNN nonconformity measure on z with respect to Z.
         """
         # Take the k smallest distances between z rows and zn and sum them.
         dist = cdist(Z, [z])[:,0]

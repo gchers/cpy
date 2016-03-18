@@ -4,7 +4,7 @@
 class NCM:
     """Nonconformity measure.
 
-    Every nonconformity measure should extend this class.
+    Each nonconformity measure should implement this interface.
     """
     
     def __init__(self):
@@ -13,12 +13,20 @@ class NCM:
         """
        
     
-    def compute(self, zn, z):
+    def compute(self, z, Z):
         """Compute the nonconformity measure for the new
-        object zn.
-        Return a float number
+        object z with respect to Z.
         
-        Keyword arguments:
-            zn: the example on which to calculate the measure.
-            z: numpy.array containing examples one per row, excluding zn. 
+        Parameters
+        ----------
+        z : array-like, shape (n_features,)
+            Test vector, where n_features is the number of features.
+        Z : array-like, shape (n_samples, n_features)
+            Training vectors, where n_samples is the number of samples,
+            n_features is the number of features.
+
+        Returns
+        -------
+        r : float
+            Nonconformity measure on z with respect to Z.
         """
