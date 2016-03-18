@@ -14,7 +14,7 @@ import numpy as np
 class CP:
     
     
-    def __init__(self, ncm, smooth=True):
+    def __init__(self, ncm, smooth=False):
         """Initialises a Conformal Prediction object.
 
         Parameters
