@@ -7,7 +7,7 @@ Python implementation of Conformal Predictors [1,2].
 
 ```python
 import numpy as np
-from cpy import cp
+from cpy.cp import CP
 from cpy.nonconformity_measures import knn
 
 # Creating a dataset.
@@ -22,7 +22,7 @@ y_test = 1
 # and 10% significance level.
 ncm = knn.KNN(k=2)
 epsilon = 0.1
-cp = cp.CP(ncm)
+cp = CP(ncm)
 prediction = cp.predict_labelled(x_test, X, Y, epsilon)
 
 print 'Prediction set: {}'.format(prediction)
