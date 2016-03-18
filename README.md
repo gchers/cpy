@@ -15,7 +15,6 @@ np.random.seed(0)
 X = np.random.random_sample((20, 2))
 X[:10,] += 1.5
 Y = [0]*10 + [1]*10
-
 x_test = np.random.random_sample(2)
 y_test = 1
 
