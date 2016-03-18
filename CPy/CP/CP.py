@@ -14,7 +14,7 @@ import numpy as np
 class CP:
     
     
-    def __init__(ncm, smooth=True):
+    def __init__(self, ncm, smooth=True):
         """Initialises a Conformal Prediction object.
 
         Keyword arguments:
@@ -24,28 +24,27 @@ class CP:
         self.smooth = smooth
         self.ncm = ncm
 
-    def predict_labelled(z, Z, y, e):
+    def predict_labelled(self, z, Z, Y, e):
         """Return a prediction set for the new object zn that contains its
         true label with probability 1-e.
     
         Keyword arguments:
             z: new example (vector).
             Z: numpy.array containing the examples one per row.
-            y: numpy.array containing the labels one per row.
+            Y: numpy.array containing the labels one per row.
             e: significance level [0,1].
         """
         Z = np.array(Z)
-        y = np.array(y)
+        Y = np.array(Y)
         pred = []
-        y_unique = np.unique(y)
-        for l in y_unique:
-            Z_l = Z[y==l,]         # Consider only examples with label l.
-            if predict_unlabelled(z, Z_l, e):
-                pred.append(l)
+        for y in np.unique(Y):
+            Z_y = Z[Y==y,]         # Consider only examples with label l.
+            if self.predict_unlabelled(z, Z_y, e):
+                pred.append(y)
     
         return pred
     
-    def predict_unlabelled(z, Z, e):
+    def predict_unlabelled(self, z, Z, e):
         """Return the prediction with confidence given a certain significance level.
         Returns True if the pvalue is greater than the significance leve, False
         otherwise.
@@ -55,11 +54,11 @@ class CP:
             Z: numpy.array containing the examples one per row.
             e: significance level [0,1].
         """
-        pval = calculate_pvalue(z, Z)
+        pval = self.calculate_pvalue(z, Z)
 
         return (pval > e)
     
-    def calculate_pvalue(z, Z):
+    def calculate_pvalue(self, z, Z):
         """Return the pvalue for a new object z given objects Z.
         
         Keyword arguments:
