@@ -6,6 +6,6 @@ setup(name='CPy',
       author='Giovanni Cherubin',
       author_email='g.chers@gmail.com',
       url='',
-      packages=['CPy', 'CPy.CP', 'CPy.nonconformity_measures'],
+      packages=['CPy', 'CPy.nonconformity_measures'],
      )
       
