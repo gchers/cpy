@@ -2,6 +2,12 @@
 
 Python implementation of Conformal Predictors [1,2].
 
+**Disclaimer** This is code I used for some experiments. You can use it,
+but I do not plan to extend it nor maintain it.
+If you're looking for a stable CP library, I am maintaining
+[a new one](https://github.com/gchers/random-world) in *Rust*,
+which is faster and more complete, provides standalone binaries, and soon
+include *Python* bindings.
 
 ## Example
 
